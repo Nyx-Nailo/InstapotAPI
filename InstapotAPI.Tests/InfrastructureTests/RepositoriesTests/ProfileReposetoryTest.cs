@@ -1,4 +1,4 @@
-using Moq;
+
 
 namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
 {
