@@ -15,6 +15,8 @@ namespace InstapotAPI.Infrastructure.Repositories
 
         public async Task<Profile> Create(Profile newProfile)
         {
+            newProfile.CreatedDate = DateTime.Now;
+            newProfile.IsVerified = false;
             _context.Add(newProfile);
             await _context.SaveChangesAsync();
 
@@ -33,17 +35,11 @@ namespace InstapotAPI.Infrastructure.Repositories
 
             return removedProfile;
         }
-
-        public async Task<string> PathToProfileImage(int id)
+        
+        public async Task<Profile> Profile(int id)
         {
-            var profileImagePath = await _context.Profiles.FindAsync(id);
-            
-            if (profileImagePath == null)
-            {
-                return null;
-            }
-
-            return profileImagePath.ProfilePicture;
+            var profile = await _context.Profiles.FindAsync(id);
+            return profile;
         }
 
         public async Task<Profile> UpdatePathToProfileImage(Profile newPathToProfileImage)
@@ -85,5 +81,58 @@ namespace InstapotAPI.Infrastructure.Repositories
             return updatePassword;
         }
 
+        public async Task<Profile> UpdateEmail(Profile newEmail)
+        {
+            var updateEmail = await _context.Profiles.FindAsync(newEmail.Id);
+
+            if (updateEmail != null)
+            {
+                updateEmail.Email = newEmail.Email;
+                await _context.SaveChangesAsync();
+            }
+
+            return updateEmail;
+        }
+
+        public async Task<Profile> Verified(Profile profile)
+        {
+            var confirmedProfile = await _context.Profiles.FindAsync(profile.Id);
+
+            if (confirmedProfile != null)
+            {
+                confirmedProfile.IsVerified = true;
+                await _context.SaveChangesAsync();
+            }
+
+            return confirmedProfile;
+        }
+
+        public async Task<string?> PathToProfileImage(int id)
+        {
+            var pathToProfileImage = await _context.Profiles.FindAsync(id);
+
+            if (pathToProfileImage == null || pathToProfileImage.ProfilePicture == null)
+            {
+                return null;
+            }
+
+            return pathToProfileImage.ProfilePicture;
+        }
+
+        public async Task<bool?> IsVerified(int id)
+        {
+            var profile = await _context.Profiles.FindAsync(id);
+
+            if (profile == null)
+            {
+                return null;
+            }
+
+            profile.IsVerified = true;
+            await _context.SaveChangesAsync();
+
+            return profile.IsVerified;
+
+        }
     }
 }
