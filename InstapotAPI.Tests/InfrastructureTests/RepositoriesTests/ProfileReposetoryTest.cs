@@ -63,7 +63,7 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         [DataRow(1)]
         [DataRow(3)]
         [DataRow(5)]
-        public async Task If_Profile_Is_Given_A_Valid_Id_Return_A_Profile(int id)
+        public async Task If_Profile_Is_Given_A_Id_Return_A_Profile(int id)
         {
             var gotenProfile = await _dbContext.Profiles.FindAsync(id);
 
@@ -79,7 +79,7 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         [DataRow(0)]
         [DataRow(-3)]
         [DataRow(500)]
-        public async Task If_Profile_Is_Given_A_Invalid_Id_Return_Null(int NonexistentId)
+        public async Task If_Profile_Is_Given_A_Nonexistent_Id_Return_Null(int NonexistentId)
         {
             var result = await _profileReposetory.Profile(NonexistentId);
 
@@ -92,7 +92,7 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         [DataRow(1)]
         [DataRow(3)]
         [DataRow(5)]
-        public async Task If_Delete_Is_Given_A_Valid_Id_Return_Profile_With_The_Same_Id(int id)
+        public async Task If_Delete_Is_Given_A_Id_Return_Profile_With_The_Same_Id(int id)
         {
 
             var result = await _profileReposetory.Delete(id);
@@ -119,7 +119,7 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         [DataRow("Path to profile picture", 1)]
         [DataRow("Path to profile picture", 3)]
         [DataRow("Path to profile picture", 5)]
-        public async Task If_PathToProfileImage_Is_Given_A_Valid_Id_Return_The_Expected_String(string expected, int id)
+        public async Task If_PathToProfileImage_Is_Given_A_Id_Return_The_Expected_String(string expected, int id)
         {
             var result = await _profileReposetory.PathToProfileImage(id);
 
@@ -131,7 +131,7 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         [DataRow(0)]
         [DataRow(-4)]
         [DataRow(6)]
-        public async Task If_PathToProfileImage_Is_Null_Or_Is_Given_A_Invalid_Id_Return_Null(int id)
+        public async Task If_PathToProfileImage_Is_Null_Or_Is_Given_A_Nonexistent_Id_Return_Null(int id)
         {
             var result = await _profileReposetory.PathToProfileImage(id);
 
@@ -143,7 +143,7 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         [DataRow("This is the new profile image path", 2)]
         [DataRow("This is the new profile image path", 4)]
         [DataRow("This is the new profile image path", 6)]
-        public async Task If_UpdatePathToProfileImage_Is_Given_A_Profile_With_A_Valid_Id_Update_The_Path_To_The_Profile_Image(string newProfileImagePath,int id)
+        public async Task If_UpdatePathToProfileImage_Is_Given_A_Profile_With_A_Id_Update_The_Path_To_The_Profile_Image(string newProfileImagePath,int id)
         {
             Profile updateProfile = await _dbContext.Profiles.FindAsync(id);
             updateProfile.ProfilePicture = newProfileImagePath;
@@ -161,7 +161,7 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         [DataRow(null, -4)]
         [DataRow("This is the new profile image path", 400)]
         [TestMethod]
-        public async Task If_UpdatePathToProfileImage_Is_Given_A_Profile_With_A_Invalid_Id_Return_Null(string? pathToProfileImage, int nonexistentId)
+        public async Task If_UpdatePathToProfileImage_Is_Given_A_Profile_With_A_Nonexistent_Id_Return_Null(string? pathToProfileImage, int nonexistentId)
         {
             Profile newProfileImage = new Profile { Id = nonexistentId, ProfilePicture = pathToProfileImage };
 
@@ -176,7 +176,7 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         [DataRow("This is a new username", 2)]
         [DataRow("This is a new username", 4)]
         [DataRow("This is a new username", 6)]
-        public async Task If_UpdateUsername_Is_Given_A_Profile_With_A_Valid_Id_Update_The_Profiles_Username(string newUsername,int id)
+        public async Task If_UpdateUsername_Is_Given_A_Profile_With_A_Id_Update_The_Profiles_Username(string newUsername,int id)
         {
             Profile updateProfile = await _dbContext.Profiles.FindAsync(id);
             updateProfile.Username = newUsername;
@@ -191,9 +191,12 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         }
 
         [TestMethod]
-        public async Task If_UpdateUsername_Is_Given_A_Profile_With_A_Invalid_Id_Return_Null()
+        [DataRow(0)]
+        [DataRow(-4)]
+        [DataRow(600)]
+        public async Task If_UpdateUsername_Is_Given_A_Profile_With_A_Nonexistent_Id_Return_Null(int id)
         {
-            Profile newUsername = new Profile { Username = "NewUsername!!!" };
+            Profile newUsername = new Profile { Id = id };
 
 
             var result = await _profileReposetory.UpdateUsername(newUsername);
@@ -207,7 +210,7 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         [DataRow("This is a new password", 2)]
         [DataRow("This is a new password", 4)]
         [DataRow("This is a new password", 6)]
-        public async Task If_UpdatePassword_Is_Given_A_Profile_With_A_Valid_Id_Update_The_Profiles_Password(string newPassword,int id)
+        public async Task If_UpdatePassword_Is_Given_A_Profile_With_A_Id_Update_The_Profiles_Password(string newPassword,int id)
         {
             Profile updateProfile = await _dbContext.Profiles.FindAsync(id);
             updateProfile.Password = newPassword;
@@ -222,9 +225,12 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         }
 
         [TestMethod]
-        public async Task If_UpdatePassword_Is_Given_A_Profile_With_A_Invalid_Id_Return_Null()
+        [DataRow(0)]
+        [DataRow(-4)]
+        [DataRow(600)]
+        public async Task If_UpdatePassword_Is_Given_A_Profile_With_A_Nonexistent_Id_Return_Null(int id)
         {
-            Profile newPassword = new Profile { Password = "NewPassword!!!" };
+            Profile newPassword = new Profile { Id = id };
 
 
             var result = await _profileReposetory.UpdatePassword(newPassword);
@@ -237,7 +243,7 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         [DataRow("This is a new email", 2)]
         [DataRow("This is a new email", 4)]
         [DataRow("This is a new email", 6)]
-        public async Task If_UpdateEmail_Is_Given_A_Profile_With_A_Valid_Id_Update_The_Profiles_Email(string newEmail, int id)
+        public async Task If_UpdateEmail_Is_Given_A_Profile_With_A_Id_Update_The_Profiles_Email(string newEmail, int id)
         {
             Profile updateProfile = await _dbContext.Profiles.FindAsync(id);
             updateProfile.Email = newEmail;
@@ -252,9 +258,12 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         }
 
         [TestMethod]
-        public async Task If_UpdateEmail_Is_Given_A_Profile_With_A_Invalid_Id_Return_Null()
+        [DataRow(0)]
+        [DataRow(-4)]
+        [DataRow(600)]
+        public async Task If_UpdateEmail_Is_Given_A_Profile_With_A_Nonexistent_Id_Return_Null(int id)
         {
-            Profile newEmail = new Profile { Password = "NewEmail!!!" };
+            Profile newEmail = new Profile { Id = id };
 
 
             var result = await _profileReposetory.UpdateEmail(newEmail);
@@ -267,7 +276,7 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         [DataRow(2)]
         [DataRow(4)]
         [DataRow(6)]
-        public async Task If_IsVerified_Is_Given_A_Valid_Id_Return_A_Bool_Of_The_Profiles_IsVerified_Value(int id)
+        public async Task If_IsVerified_Is_Given_A_Id_Return_A_Bool_Of_The_Profiles_IsVerified_Value(int id)
         {
             var result = await _profileReposetory.IsVerified(id);
 
@@ -280,7 +289,7 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         [DataRow(0)]
         [DataRow(-4)]
         [DataRow(100)]
-        public async Task If_IsVerified_Is_Given_A_Invalid_Id_Return_Null(int id)
+        public async Task If_IsVerified_Is_Given_A_Nonexistent_Id_Return_Null(int id)
         {
             var result = await _profileReposetory.IsVerified(id);
 
@@ -292,7 +301,7 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         [DataRow(true,2)]
         [DataRow(true,4)]
         [DataRow(true,6)]
-        public async Task If_Verified_Is_Given_A_Profile_With_A_Valid_Id_Return_The_Profile_With_The_IsVerified_Value_Set_To_True(bool expected, int id)
+        public async Task If_Verified_Is_Given_A_Profile_With_A_Id_Return_The_Profile_With_The_IsVerified_Value_Set_To_True(bool expected, int id)
         {
             Profile updateProfile = await _dbContext.Profiles.FindAsync(id);
 
@@ -308,7 +317,7 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         [DataRow(0)]
         [DataRow(-4)]
         [DataRow(100)]
-        public async Task If_Verified_Is_Given_A_Invalid_Id_Return_Null(int id)
+        public async Task If_Verified_Is_Given_A_Nonexistent_Id_Return_Null(int id)
         {
             Profile updateProfile = new Profile { Id = id };
 
