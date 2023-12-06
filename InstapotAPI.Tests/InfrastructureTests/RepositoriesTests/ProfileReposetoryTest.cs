@@ -119,9 +119,9 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         [DataRow("Path to profile picture", 1)]
         [DataRow("Path to profile picture", 3)]
         [DataRow("Path to profile picture", 5)]
-        public async Task If_PathToProfileImage_Is_Given_A_Id_Return_The_Expected_String(string expected, int id)
+        public async Task If_PathToProfilePicture_Is_Given_A_Id_Return_The_Expected_String(string expected, int id)
         {
-            var result = await _profileReposetory.PathToProfileImage(id);
+            var result = await _profileReposetory.PathToProfilePicture(id);
 
 
             Assert.AreEqual(expected, result);
@@ -131,42 +131,42 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         [DataRow(0)]
         [DataRow(-4)]
         [DataRow(6)]
-        public async Task If_PathToProfileImage_Is_Null_Or_Is_Given_A_Nonexistent_Id_Return_Null(int id)
+        public async Task If_PathToProfilePicture_Is_Null_Or_Is_Given_A_Nonexistent_Id_Return_Null(int id)
         {
-            var result = await _profileReposetory.PathToProfileImage(id);
+            var result = await _profileReposetory.PathToProfilePicture(id);
 
 
             Assert.IsNull(result);
         }
 
         [TestMethod]
-        [DataRow("This is the new profile image path", 2)]
-        [DataRow("This is the new profile image path", 4)]
-        [DataRow("This is the new profile image path", 6)]
-        public async Task If_UpdatePathToProfileImage_Is_Given_A_Profile_With_A_Id_Update_The_Path_To_The_Profile_Image(string newProfileImagePath,int id)
+        [DataRow("This is the new profile picture path", 2)]
+        [DataRow("This is the new profile picture path", 4)]
+        [DataRow("This is the new profile picture path", 6)]
+        public async Task If_UpdatePathToProfilePicture_Is_Given_A_Profile_With_A_Id_Update_The_Path_To_The_Profile_Picture(string newProfilePicturePath,int id)
         {
             Profile updateProfile = await _dbContext.Profiles.FindAsync(id);
-            updateProfile.ProfilePicture = newProfileImagePath;
+            updateProfile.ProfilePicture = newProfilePicturePath;
 
 
-            var result = await _profileReposetory.UpdatePathToProfileImage(updateProfile);
+            var result = await _profileReposetory.UpdatePathToProfilePicture(updateProfile);
 
 
             Assert.IsInstanceOfType(result, typeof(Profile));
             Assert.AreEqual(id, result.Id);
-            Assert.AreEqual(newProfileImagePath, result.ProfilePicture);
+            Assert.AreEqual(newProfilePicturePath, result.ProfilePicture);
         }
 
         [DataRow(null, 0)]
         [DataRow(null, -4)]
-        [DataRow("This is the new profile image path", 400)]
+        [DataRow("This is the new profile picture path", 400)]
         [TestMethod]
-        public async Task If_UpdatePathToProfileImage_Is_Given_A_Profile_With_A_Nonexistent_Id_Return_Null(string? pathToProfileImage, int nonexistentId)
+        public async Task If_UpdatePathToProfilePicture_Is_Given_A_Profile_With_A_Nonexistent_Id_Return_Null(string? pathToProfilePicture, int nonexistentId)
         {
-            Profile newProfileImage = new Profile { Id = nonexistentId, ProfilePicture = pathToProfileImage };
+            Profile newProfilePicture = new Profile { Id = nonexistentId, ProfilePicture = pathToProfilePicture };
 
 
-            var result = await _profileReposetory.UpdatePathToProfileImage(newProfileImage);
+            var result = await _profileReposetory.UpdatePathToProfilePicture(newProfilePicture);
 
 
             Assert.IsNull(result);

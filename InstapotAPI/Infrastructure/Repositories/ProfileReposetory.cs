@@ -42,17 +42,17 @@ namespace InstapotAPI.Infrastructure.Repositories
             return profile;
         }
 
-        public async Task<Profile> UpdatePathToProfileImage(Profile newPathToProfileImage)
+        public async Task<Profile> UpdatePathToProfilePicture(Profile newPathToProfilePicture)
         {
-            var updatePathToProfileImage = await _context.Profiles.FindAsync(newPathToProfileImage.Id);
+            var updatePathToProfilePicture = await _context.Profiles.FindAsync(newPathToProfilePicture.Id);
 
-            if (updatePathToProfileImage != null)
+            if (updatePathToProfilePicture != null)
             {
-                updatePathToProfileImage.ProfilePicture = newPathToProfileImage.ProfilePicture;
+                updatePathToProfilePicture.ProfilePicture = newPathToProfilePicture.ProfilePicture;
                 await _context.SaveChangesAsync();
             }
 
-            return updatePathToProfileImage;
+            return updatePathToProfilePicture;
         }
 
         public async Task<Profile> UpdateUsername(Profile newUsername)
@@ -107,16 +107,16 @@ namespace InstapotAPI.Infrastructure.Repositories
             return confirmedProfile;
         }
 
-        public async Task<string?> PathToProfileImage(int id)
+        public async Task<string?> PathToProfilePicture(int id)
         {
-            var pathToProfileImage = await _context.Profiles.FindAsync(id);
+            var pathToProfilePicture = await _context.Profiles.FindAsync(id);
 
-            if (pathToProfileImage == null || pathToProfileImage.ProfilePicture == null)
+            if (pathToProfilePicture == null || pathToProfilePicture.ProfilePicture == null)
             {
                 return null;
             }
 
-            return pathToProfileImage.ProfilePicture;
+            return pathToProfilePicture.ProfilePicture;
         }
 
         public async Task<bool?> IsVerified(int id)
