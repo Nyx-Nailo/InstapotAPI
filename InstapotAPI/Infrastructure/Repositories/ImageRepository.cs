@@ -65,4 +65,48 @@ public class ImageRepository
 
         return changedImage;
     }
+    public async Task<Image?> ChangeDescription(int id, string newDescription)
+    {
+        var changedImage = await _dbContext.Images.FindAsync(id);
+
+        if (changedImage is null) return null;
+
+        if (newDescription is null)
+            return changedImage;
+
+        changedImage.Title = newDescription;
+
+        return changedImage;
+    }
+    public async Task<List<Image>> GetImagesFromUser(int userId)
+    {
+        return _dbContext.Images.Where(img => img.UserID == userId).ToList();
+    }
+    public async Task<int?> GetLikeCount(int id)
+    {
+        var image = await _dbContext.Images.FindAsync(id);
+
+        return image?.LikedBy.Count();
+    }
+    public async Task<int?> AddLike(int id, int userId)
+    {
+        var image = await _dbContext.Images.FindAsync(id);
+
+        if (image is null) return null;
+
+        if (image.LikedBy.Contains(userId) is false)
+            image.LikedBy.Add(userId);
+
+        return image.LikedBy.Count();
+    }
+    public async Task<int?> RemoveLike(int id, int userId)
+    {
+        var image = await _dbContext.Images.FindAsync(id);
+
+        if (image is null) return null;
+
+        image.LikedBy.Remove(userId);
+
+        return image.LikedBy.Count();
+    }
 }
