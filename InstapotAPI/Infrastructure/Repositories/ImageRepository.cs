@@ -109,4 +109,18 @@ public class ImageRepository
 
         return image.LikedBy.Count();
     }
+    public async Task<bool?> IsPublished(int id)
+    {
+        return (await _dbContext.Images.FindAsync(id))?.isPublished;
+    }
+    public async Task<bool?> SetPublished(int id, bool published)
+    {
+        var image = await _dbContext.Images.FindAsync(id);
+
+        if (image is null) return null;
+
+        image.isPublished = published;
+
+        return image.isPublished;
+    }
 }

@@ -422,8 +422,70 @@ public class ImageRepositoryTests
     //Add Comment
     //Remove Comment
     //Change Image Comments to List of Int and do migration
-    //Get Published Status
-    //Change published Status
+    #region Get Published Status
+    [TestMethod]
+    [DataRow(true)]
+    [DataRow(false)]
+    public async Task When_Getting_Published_Status_From_Exsisting_Image_Return_Published_Status_As_Bool(bool expected)
+    {
+        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<Comment>(), isPublished = expected, LikedBy = new List<int>() };
+        _dbContext.Add(image);
+        _dbContext.SaveChanges();
+        var id = _dbContext.Images.Count();
 
+        var result = await _sut.IsPublished(id);
+
+        Assert.AreEqual(expected, result);
+    }
+    [TestMethod]
+    public async Task When_Getting_Published_Status_From_Non_Existing_Image_Return_Null()
+    {
+        var id = 100;
+        
+        var result = await _sut.IsPublished(id);
+
+        Assert.IsNull(result);
+    }
+    #endregion
+    #region Change published Status
+    [TestMethod]
+    [DataRow(true)]
+    [DataRow(false)]
+    public async Task When_Changing_Published_Status_Return_New_Value(bool expected)
+    {
+        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<Comment>(), isPublished = !expected, LikedBy = new List<int>() };
+        _dbContext.Add(image);
+        _dbContext.SaveChanges();
+        var id = _dbContext.Images.Count();
+
+        var result = await _sut.SetPublished(id, expected);
+
+        Assert.AreEqual(expected, result);
+    }
+    [TestMethod]
+    [DataRow(true)]
+    [DataRow(false)]
+    public async Task When_Changing_Published_Status_Update_Database(bool expected)
+    {
+        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<Comment>(), isPublished = !expected, LikedBy = new List<int>() };
+        _dbContext.Add(image);
+        _dbContext.SaveChanges();
+        var id = _dbContext.Images.Count();
+
+        await _sut.SetPublished(id, expected);
+        var result = (await _dbContext.Images.FindAsync(id))?.isPublished;
+
+        Assert.AreEqual(expected, result);
+    }
+    [TestMethod]
+    public async Task When_Trying_To_Change_Status_Of_Non_Existing_Image_Return_Null()
+    {
+        var id = 100;
+
+        var result = (await _sut.SetPublished(id, true));
+
+        Assert.IsNull(result);
+    }
+    #endregion
     //Comment Repository
 }
