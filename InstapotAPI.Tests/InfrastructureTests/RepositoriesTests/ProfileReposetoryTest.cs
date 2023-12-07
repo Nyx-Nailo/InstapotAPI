@@ -65,9 +65,6 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         [DataRow(5)]
         public async Task If_Profile_Is_Given_A_Id_Return_A_Profile(int id)
         {
-            var gotenProfile = await _dbContext.Profiles.FindAsync(id);
-
-
             var result = await _profileReposetory.Profile(id);
 
 
