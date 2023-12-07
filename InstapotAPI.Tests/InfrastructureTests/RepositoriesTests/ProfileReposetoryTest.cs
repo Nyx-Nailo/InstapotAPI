@@ -127,7 +127,7 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         [TestMethod]
         [DataRow(0)]
         [DataRow(-4)]
-        [DataRow(6)]
+        [DataRow(600)]
         public async Task If_PathToProfilePicture_Is_Null_Or_Is_Given_A_Nonexistent_Id_Return_Null(int id)
         {
             var result = await _profileReposetory.PathToProfilePicture(id);
