@@ -19,15 +19,15 @@ public class ImageRepositoryTests
     public void Initializer()
     {
         _testImages = [
-            new Image { UserID = 1, Path = "this should be a img path", Title = "Image1", Description = "Desc of Image1", CreatedDate = DateTime.Now, Comments = new List<Comment>(), isPublished = true, LikedBy = new List<int>() },
-            new Image { UserID = 1, Path = "this should be a img path", Title = "Image2", Description = "Desc of Image2", CreatedDate = DateTime.Now, Comments = new List<Comment>(), isPublished = true, LikedBy = new List<int>() },
-            new Image { UserID = 2, Path = "this should be a img path", Title = "Image3", Description = "Desc of Image3", CreatedDate = DateTime.Now, Comments = new List<Comment>(), isPublished = true, LikedBy = new List<int>() },
-            new Image { UserID = 2, Path = "this should be a img path", Title = "Image4", Description = "Desc of Image4", CreatedDate = DateTime.Now, Comments = new List<Comment>(), isPublished = true, LikedBy = new List<int>() },
-            new Image { UserID = 1, Path = "this should be a img path", Title = "Image5", Description = "Desc of Image5", CreatedDate = DateTime.Now, Comments = new List<Comment>(), isPublished = true, LikedBy = new List<int>() },
-            new Image { UserID = 2, Path = "this should be a img path", Title = "Image6", Description = "Desc of Image6", CreatedDate = DateTime.Now, Comments = new List<Comment>(), isPublished = true, LikedBy = new List<int>() },
-            new Image { UserID = 3, Path = "this should be a img path", Title = "Image7", Description = "Desc of Image7", CreatedDate = DateTime.Now, Comments = new List<Comment>(), isPublished = true, LikedBy = new List<int>() },
-            new Image { UserID = 1, Path = "this should be a img path", Title = "Image8", Description = "Desc of Image8", CreatedDate = DateTime.Now, Comments = new List<Comment>(), isPublished = true, LikedBy = new List<int>() },
-            new Image { UserID = 3, Path = "this should be a img path", Title = "Image9", Description = "Desc of Image9", CreatedDate = DateTime.Now, Comments = new List<Comment>(), isPublished = true, LikedBy = new List<int>() },
+            new Image { UserID = 1, Path = "this should be a img path", Title = "Image1", Description = "Desc of Image1", CreatedDate = DateTime.Now, Comments = new List<int>(), isPublished = true, LikedBy = new List<int>() },
+            new Image { UserID = 1, Path = "this should be a img path", Title = "Image2", Description = "Desc of Image2", CreatedDate = DateTime.Now, Comments = new List<int>(), isPublished = true, LikedBy = new List<int>() },
+            new Image { UserID = 2, Path = "this should be a img path", Title = "Image3", Description = "Desc of Image3", CreatedDate = DateTime.Now, Comments = new List<int>(), isPublished = true, LikedBy = new List<int>() },
+            new Image { UserID = 2, Path = "this should be a img path", Title = "Image4", Description = "Desc of Image4", CreatedDate = DateTime.Now, Comments = new List<int>(), isPublished = true, LikedBy = new List<int>() },
+            new Image { UserID = 1, Path = "this should be a img path", Title = "Image5", Description = "Desc of Image5", CreatedDate = DateTime.Now, Comments = new List<int>(), isPublished = true, LikedBy = new List<int>() },
+            new Image { UserID = 2, Path = "this should be a img path", Title = "Image6", Description = "Desc of Image6", CreatedDate = DateTime.Now, Comments = new List<int>(), isPublished = true, LikedBy = new List<int>() },
+            new Image { UserID = 3, Path = "this should be a img path", Title = "Image7", Description = "Desc of Image7", CreatedDate = DateTime.Now, Comments = new List<int>(), isPublished = true, LikedBy = new List<int>() },
+            new Image { UserID = 1, Path = "this should be a img path", Title = "Image8", Description = "Desc of Image8", CreatedDate = DateTime.Now, Comments = new List<int>(), isPublished = true, LikedBy = new List<int>() },
+            new Image { UserID = 3, Path = "this should be a img path", Title = "Image9", Description = "Desc of Image9", CreatedDate = DateTime.Now, Comments = new List<int>(), isPublished = true, LikedBy = new List<int>() },
         ];
 
         var connection = new SqliteConnection("DataSource=:memory:");
@@ -45,7 +45,7 @@ public class ImageRepositoryTests
     [TestMethod]
     public async Task When_Creating_New_Image_Return_Created_Image()
     {
-        var expected = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<Comment>(), isPublished = true, LikedBy = new List<int>() };
+        var expected = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<int>(), isPublished = true, LikedBy = new List<int>() };
 
         var result = await _sut.CreateNewImage(expected);
 
@@ -55,7 +55,7 @@ public class ImageRepositoryTests
     [TestMethod]
     public async Task When_Creating_New_Image_It_Is_Added_To_Database()
     {
-        var newImage = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<Comment>(), isPublished = true, LikedBy = new List<int>() };
+        var newImage = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<int>(), isPublished = true, LikedBy = new List<int>() };
         var expected = _dbContext.Images.Count() + 1;
 
         await _sut.CreateNewImage(newImage);
@@ -112,7 +112,7 @@ public class ImageRepositoryTests
     [TestMethod]
     public async Task When_Successfully_Deleting_Image_Return_Deleted_Image()
     {
-        var expected = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<Comment>(), isPublished = true, LikedBy = new List<int>() };
+        var expected = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<int>(), isPublished = true, LikedBy = new List<int>() };
         _dbContext.Images.Add(expected);
         _dbContext.SaveChanges();
         var id = _dbContext.Images.Count();
@@ -125,7 +125,7 @@ public class ImageRepositoryTests
     public async Task When_Successfully_Deleting_Image_Remove_Image_From_Database()
     {
         var expected = _dbContext.Images.Count();
-        var deletedImage = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<Comment>(), isPublished = true, LikedBy = new List<int>() };
+        var deletedImage = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<int>(), isPublished = true, LikedBy = new List<int>() };
         _dbContext.Images.Add(deletedImage);
         _dbContext.SaveChanges();
 
@@ -269,7 +269,7 @@ public class ImageRepositoryTests
 
         var result = (await _sut.GetImagesFromUser(id));
 
-        Assert.AreEqual(expected.Count(), result.Count());
+        Assert.AreEqual(expected.Count, result.Count);
         Assert.IsTrue(result.Contains(expected[0]));
     }
     [TestMethod]
@@ -280,7 +280,7 @@ public class ImageRepositoryTests
     {
         var result = await _sut.GetImagesFromUser(id);
 
-        Assert.AreEqual(0, result.Count());
+        Assert.AreEqual(0, result.Count);
     }
     #endregion
     #region Get Like Count
@@ -290,7 +290,7 @@ public class ImageRepositoryTests
     [DataRow(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 })]
     public async Task When_Getting_Like_Count_From_Image_Return_Amount_Of_Likes(int[] likes)
     {
-        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<Comment>(), isPublished = true, LikedBy = likes.ToList() };
+        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<int>(), isPublished = true, LikedBy = likes.ToList() };
         _dbContext.Add(image);
         _dbContext.SaveChanges();
         var expected = likes.Count();
@@ -316,7 +316,7 @@ public class ImageRepositoryTests
     [DataRow(new int[] { 1, 2, 3, 4, 5})]
     public async Task When_Successfully_Adding_A_Like_Return_New_Like_Count(int[] likes)
     {
-        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<Comment>(), isPublished = true, LikedBy = likes.ToList() };
+        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<int>(), isPublished = true, LikedBy = likes.ToList() };
         _dbContext.Add(image);
         _dbContext.SaveChanges();
         var id = _dbContext.Images.Count();
@@ -331,7 +331,7 @@ public class ImageRepositoryTests
     [DataRow(new int[] { 1, 2, 3, 4, 5 })]
     public async Task When_Successfully_Adding_A_Like_Add_User_To_Liked_List(int[] likes)
     {
-        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<Comment>(), isPublished = true, LikedBy = likes.ToList() };
+        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<int>(), isPublished = true, LikedBy = likes.ToList() };
         _dbContext.Add(image);
         _dbContext.SaveChanges();
         var id = _dbContext.Images.Count();
@@ -353,7 +353,7 @@ public class ImageRepositoryTests
     public async Task When_Trying_To_Add_Like_From_User_Already_On_Like_List_Dont_Add_Them()
     {
         var likes = new int[] { 1, 2, 3, 4, 5 };
-        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<Comment>(), isPublished = true, LikedBy = likes.ToList() };
+        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<int>(), isPublished = true, LikedBy = likes.ToList() };
         _dbContext.Add(image);
         _dbContext.SaveChanges();
         var id = _dbContext.Images.Count();
@@ -371,7 +371,7 @@ public class ImageRepositoryTests
     [DataRow(new int[] { 1, 2, 3, 4, 5 }, 5)]
     public async Task When_Successfully_Removing_A_Like_Return_New_Like_Count(int[] likes, int removedUserId)
     {
-        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<Comment>(), isPublished = true, LikedBy = likes.ToList() };
+        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<int>(), isPublished = true, LikedBy = likes.ToList() };
         _dbContext.Add(image);
         _dbContext.SaveChanges();
         var id = _dbContext.Images.Count();
@@ -386,7 +386,7 @@ public class ImageRepositoryTests
     [DataRow(new int[] { 1, 2, 3, 4, 5 }, 5)]
     public async Task When_Successfully_Removing_A_Like_Remove_User_To_Liked_List(int[] likes, int removedUserId)
     {
-        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<Comment>(), isPublished = true, LikedBy = likes.ToList() };
+        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<int>(), isPublished = true, LikedBy = likes.ToList() };
         _dbContext.Add(image);
         _dbContext.SaveChanges();
         var id = _dbContext.Images.Count();
@@ -407,7 +407,7 @@ public class ImageRepositoryTests
     public async Task When_Trying_To_Remove_Like_From_User_That_Dont_Like_The_Image_Do_Nothing()
     {
         var likes = new int[] { 1, 2, 3, 4, 5 };
-        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<Comment>(), isPublished = true, LikedBy = likes.ToList() };
+        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<int>(), isPublished = true, LikedBy = likes.ToList() };
         _dbContext.Add(image);
         _dbContext.SaveChanges();
         var id = _dbContext.Images.Count();
@@ -428,7 +428,7 @@ public class ImageRepositoryTests
     [DataRow(false)]
     public async Task When_Getting_Published_Status_From_Exsisting_Image_Return_Published_Status_As_Bool(bool expected)
     {
-        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<Comment>(), isPublished = expected, LikedBy = new List<int>() };
+        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<int>(), isPublished = expected, LikedBy = new List<int>() };
         _dbContext.Add(image);
         _dbContext.SaveChanges();
         var id = _dbContext.Images.Count();
@@ -453,7 +453,7 @@ public class ImageRepositoryTests
     [DataRow(false)]
     public async Task When_Changing_Published_Status_Return_New_Value(bool expected)
     {
-        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<Comment>(), isPublished = !expected, LikedBy = new List<int>() };
+        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<int>(), isPublished = !expected, LikedBy = new List<int>() };
         _dbContext.Add(image);
         _dbContext.SaveChanges();
         var id = _dbContext.Images.Count();
@@ -467,7 +467,7 @@ public class ImageRepositoryTests
     [DataRow(false)]
     public async Task When_Changing_Published_Status_Update_Database(bool expected)
     {
-        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<Comment>(), isPublished = !expected, LikedBy = new List<int>() };
+        var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<int>(), isPublished = !expected, LikedBy = new List<int>() };
         _dbContext.Add(image);
         _dbContext.SaveChanges();
         var id = _dbContext.Images.Count();
