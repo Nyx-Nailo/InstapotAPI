@@ -1,5 +1,6 @@
 
 using InstapotAPI.Infrastructure;
+using InstapotAPI.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace InstapotAPI;
@@ -49,6 +50,7 @@ public class Program
         {
             var context = services.GetRequiredService<InstapotContext>();
             context.Database.Migrate();
+            FakeData.InitializeData(1000);
         }
         catch (Exception ex)
         {
