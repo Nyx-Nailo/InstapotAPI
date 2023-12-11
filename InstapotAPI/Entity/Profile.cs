@@ -13,6 +13,7 @@ namespace InstapotAPI.Entity
         public string Password { get; set; }
         public string? ProfilePicture { get; set; } = string.Empty;
         public bool IsVerified { get; set; } = false;
+        public bool LoginStatus { get; set; } = false; 
         public List<int> Images { get; set; } = new List<int>();
         public List<int> Comments { get; set; } = new List<int>(); 
     }

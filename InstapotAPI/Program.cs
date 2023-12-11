@@ -1,4 +1,5 @@
 
+using InstapotAPI.Helpers;
 using InstapotAPI.Infrastructure;
 using InstapotAPI.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ public class Program
         builder.Logging.SetMinimumLevel(LogLevel.Debug);
 
         builder.Services.AddScoped<IProfileReposetory, ProfileReposetory>();
+        builder.Services.AddAutoMapper(typeof(MappingProfiler));
 
         var app = builder.Build();
 

@@ -1,5 +1,7 @@
-﻿using InstapotAPI.Entity;
+﻿using InstapotAPI.Dtos.Profile;
+using InstapotAPI.Entity;
 using InstapotAPI.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -22,17 +24,9 @@ namespace InstapotAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Profile>> Get(int id)
+        public async Task<ActionResult> Get()
         {
-            var createdProfile = await _profileReposetory.Profile(id);
-
-            if (createdProfile == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(createdProfile);
-
+            return Ok();
         }
 
         // POST api/<ValuesController>
@@ -45,15 +39,29 @@ namespace InstapotAPI.Controllers
         }
 
         [HttpPost("Logout")]
-        public async Task<ActionResult> Logout()
+        public async Task<ActionResult> Logout(int id)
         {
-            return new RedirectResult("/");
+            var profileUpdateLoginStatus = await _profileReposetory.SetLoginStatusToFalse(id);
+
+            if (profileUpdateLoginStatus == null)
+            {
+                return NotFound(id);
+            }
+
+            return Ok(profileUpdateLoginStatus);
         }
 
         [HttpPost("Login")]
-        public async Task<ActionResult> Login()
+        public async Task<ActionResult> Login(int id)
         {
-            return new RedirectResult("/");
+            var profileUpdateLoginStatus = await _profileReposetory.SetLoginStatusToTrue(id);
+
+            if (profileUpdateLoginStatus == null)
+            {
+                return NotFound(id);
+            }
+
+            return Ok(profileUpdateLoginStatus);
         }
 
 
