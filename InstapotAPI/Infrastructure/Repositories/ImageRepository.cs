@@ -44,7 +44,7 @@ public class ImageRepository : IImageRepository
     }
     public async Task<List<Image>?> GetImageFlow(int id)
     {
-        return _dbContext.Images.Where(img => img.UserID != id).ToList();
+        return _dbContext.Images.Where(img => img.UserID != id && img.isPublished == true).ToList();
     }
     public async Task<Image?> DeleteImage(int id)
     {
