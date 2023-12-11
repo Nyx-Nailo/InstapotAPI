@@ -3,6 +3,7 @@ using System;
 using InstapotAPI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InstapotAPI.Migrations
 {
     [DbContext(typeof(InstapotContext))]
-    partial class InstapotContextModelSnapshot : ModelSnapshot
+    [Migration("20231211124453_AddedUpdateLoginStatus")]
+    partial class AddedUpdateLoginStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
@@ -38,6 +41,8 @@ namespace InstapotAPI.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ImageID");
+
                     b.ToTable("Comments");
                 });
 
@@ -46,10 +51,6 @@ namespace InstapotAPI.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Comments")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("TEXT");
@@ -125,6 +126,20 @@ namespace InstapotAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Profiles");
+                });
+
+            modelBuilder.Entity("InstapotAPI.Entity.Comment", b =>
+                {
+                    b.HasOne("InstapotAPI.Entity.Image", null)
+                        .WithMany("Comments")
+                        .HasForeignKey("ImageID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("InstapotAPI.Entity.Image", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

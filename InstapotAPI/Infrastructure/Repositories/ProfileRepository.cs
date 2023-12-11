@@ -4,11 +4,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace InstapotAPI.Infrastructure.Repositories
 {
-    public class ProfileReposetory : IProfileRepository
+
+    public class ProfileRepository : IProfileRepository
+
     {
-        private InstapotContext _context;
+        private readonly InstapotContext _context;
         
-        public ProfileReposetory(InstapotContext context)
+        public ProfileRepository(InstapotContext context)
         {
             _context = context;
         }
@@ -133,6 +135,52 @@ namespace InstapotAPI.Infrastructure.Repositories
 
             return profile.IsVerified;
 
+        }
+
+        public async Task<bool?> UpdateLoginStatus(int id)
+        {
+            var updateLoginStatus = await _context.Profiles.FindAsync(id);
+
+            if (updateLoginStatus == null)
+            {
+                return null;
+            }
+
+            updateLoginStatus.LoginStatus = !updateLoginStatus.LoginStatus;
+            await _context.SaveChangesAsync();
+
+            return updateLoginStatus.LoginStatus;
+            
+        }
+
+        public async Task<bool?> SetLoginStatusToTrue(int id)
+        {
+            var updateLoginStatus = await _context.Profiles.FindAsync(id);
+
+            if (updateLoginStatus == null)
+            {
+                return null;
+            }
+
+            updateLoginStatus.LoginStatus = true;
+            await _context.SaveChangesAsync();
+
+            return updateLoginStatus.LoginStatus;
+        }
+
+        public async Task<bool?> SetLoginStatusToFalse(int id)
+        {
+            var updateLoginStatus = await _context.Profiles.FindAsync(id);
+
+            if (updateLoginStatus == null)
+            {
+                return null;
+            }
+
+            updateLoginStatus.LoginStatus = false;
+            await _context.SaveChangesAsync();
+
+            return updateLoginStatus.LoginStatus;
         }
     }
 }
