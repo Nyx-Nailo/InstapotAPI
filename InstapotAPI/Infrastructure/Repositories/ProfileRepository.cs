@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 namespace InstapotAPI.Infrastructure.Repositories
 {
 
-    public class ProfileReposetory : IProfileRepository
+    public class ProfileRepository : IProfileRepository
 
     {
         private readonly InstapotContext _context;
         
-        public ProfileReposetory(InstapotContext context)
+        public ProfileRepository(InstapotContext context)
         {
             _context = context;
         }

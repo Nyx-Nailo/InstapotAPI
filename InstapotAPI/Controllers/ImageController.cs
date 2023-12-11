@@ -40,6 +40,13 @@ public class ImageController : ControllerBase
         if (image == null) return NotFound();
         return Ok(image);
     }
+    [HttpGet]
+    [Route("Comments/{imageId}")]
+    public async Task<ActionResult<Image>> GetComments(int id)
+    {
+        var image = await _commentRepo.GetCommentsOnImage(id);
+        return Ok(image);
+    }
     [HttpPost]
     [Route("PostImage/{userId}/{path}/{description}")]
     public async Task<ActionResult<Image>> PostImage(int userID, string path, string desc)

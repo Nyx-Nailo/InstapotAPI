@@ -14,7 +14,7 @@ namespace InstapotAPI.Tests.Controllers
     public class LoginControllerTest
     {
 
-        private readonly Mock<IProfileReposetory> _profileReposetory;
+        private readonly Mock<IProfileRepository> _profileReposetory;
 
         private readonly Mock<ILogger<LoginController>> _logger;
 
@@ -24,7 +24,7 @@ namespace InstapotAPI.Tests.Controllers
 
         public LoginControllerTest()
         {
-            _profileReposetory = new Mock<IProfileReposetory>();
+            _profileReposetory = new Mock<IProfileRepository>();
             _logger = new Mock<ILogger<LoginController>>();
             _mapper = new Mock<IMapper>();
         }

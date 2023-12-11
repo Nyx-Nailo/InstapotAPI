@@ -13,11 +13,11 @@ namespace InstapotAPI.Controllers
     public class LoginController : ControllerBase
     {
 
-        private readonly IProfileReposetory _profileReposetory;
+        private readonly IProfileRepository _profileReposetory;
 
         private readonly ILogger<LoginController> _logger;
         
-        public LoginController(IProfileReposetory profileReposetory, ILogger<LoginController> logger) 
+        public LoginController(IProfileRepository profileReposetory, ILogger<LoginController> logger) 
         {
             _profileReposetory = profileReposetory; 
             _logger = logger;

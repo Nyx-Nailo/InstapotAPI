@@ -38,7 +38,7 @@ public class Program
 
         builder.Services.AddScoped<IImageRepository, ImageRepository>();
         builder.Services.AddScoped<ICommentRepository, CommentRepository>();
-        builder.Services.AddScoped<IProfileRepository, ProfileReposetory>();
+        builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
         builder.Services.AddAutoMapper(typeof(MappingProfiler));
 
 
