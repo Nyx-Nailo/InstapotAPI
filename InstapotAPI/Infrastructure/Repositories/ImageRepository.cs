@@ -6,7 +6,7 @@ namespace InstapotAPI.Infrastructure.Repositories;
 
 public class ImageRepository
 {
-    InstapotContext _dbContext;
+    private InstapotContext _dbContext;
     public ImageRepository(InstapotContext context)
     {
         _dbContext = context;

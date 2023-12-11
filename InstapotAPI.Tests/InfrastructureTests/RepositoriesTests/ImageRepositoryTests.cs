@@ -421,7 +421,6 @@ public class ImageRepositoryTests
     #endregion
     //Add Comment
     //Remove Comment
-    //Change Image Comments to List of Int and do migration
     #region Get Published Status
     [TestMethod]
     [DataRow(true)]
@@ -487,5 +486,4 @@ public class ImageRepositoryTests
         Assert.IsNull(result);
     }
     #endregion
-    //Comment Repository
 }
