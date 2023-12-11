@@ -9,9 +9,9 @@ namespace InstapotAPI.Controllers;
 [Route("api/[controller]")]
 public class ImageController : ControllerBase
 {
-    private readonly ImageRepository _imageRepo;
-    private readonly CommentRepository _commentRepo;
-    public ImageController(ImageRepository imageRepo, CommentRepository commentRepo)
+    private readonly IImageRepository _imageRepo;
+    private readonly ICommentRepository _commentRepo;
+    public ImageController(IImageRepository imageRepo, ICommentRepository commentRepo)
     {
         _imageRepo = imageRepo;
         _commentRepo = commentRepo;
