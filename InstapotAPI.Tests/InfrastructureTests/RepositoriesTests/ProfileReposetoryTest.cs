@@ -1,3 +1,4 @@
+
 using InstapotAPI.Infrastructure;
 using InstapotAPI.Infrastructure.Repositories;
 using InstapotAPI.Entity;
@@ -44,7 +45,7 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         [TestMethod]
         public async Task If_Create_Is_Called_Return_The_Created_Profile()
         {
-            Profile profile = new Profile { Username="Detta är ett anvendar namn ", Password="Detta är ett lösenord", Email="Detta är en email" };
+            Profile profile = new Profile { Username="Detta Ã¤r ett anvendar namn ", Password="Detta Ã¤r ett lÃ¶senord", Email="Detta Ã¤r en email" };
             Profile expected = profile;
 
             

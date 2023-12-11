@@ -3,6 +3,7 @@ using System;
 using InstapotAPI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InstapotAPI.Migrations
 {
     [DbContext(typeof(InstapotContext))]
-    partial class InstapotContextModelSnapshot : ModelSnapshot
+    [Migration("20231208083615_UpdateImageComentList")]
+    partial class UpdateImageComentList
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
@@ -105,17 +108,15 @@ namespace InstapotAPI.Migrations
                     b.Property<bool>("IsVerified")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime?>("LastLoggedIn")
+                    b.Property<DateTime>("LastLoggedIn")
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("LoginStatus")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProfilePicture")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Username")

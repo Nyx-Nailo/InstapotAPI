@@ -1,7 +1,8 @@
-
 using InstapotAPI.Helpers;
 using InstapotAPI.Infrastructure;
 using InstapotAPI.Infrastructure.Repositories;
+using InstapotAPI.Services;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace InstapotAPI;
@@ -24,8 +25,22 @@ public class Program
         builder.Logging.AddConsole();
         builder.Logging.SetMinimumLevel(LogLevel.Debug);
 
-        builder.Services.AddScoped<IProfileReposetory, ProfileReposetory>();
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("CorsPolicy",
+                                  policy =>
+                                  {
+                                      policy.AllowAnyOrigin()
+                                    .AllowAnyHeader()
+                                    .AllowAnyMethod();
+                                  });
+        });
+
+        builder.Services.AddScoped<IImageRepository, ImageRepository>();
+        builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+        builder.Services.AddScoped<IProfileRepository, ProfileReposetory>();
         builder.Services.AddAutoMapper(typeof(MappingProfiler));
+
 
         var app = builder.Build();
 
@@ -40,6 +55,7 @@ public class Program
 
         app.UseAuthorization();
 
+        app.UseCors("CorsPolicy");
 
         app.MapControllers();
 
@@ -54,6 +70,11 @@ public class Program
         {
             var context = services.GetRequiredService<InstapotContext>();
             context.Database.Migrate();
+
+            if (!context.Profiles.Any())
+            {
+                FakeData.InitializeData(1000);
+            }
         }
         catch (Exception ex)
         {
