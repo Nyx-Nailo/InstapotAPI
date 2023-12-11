@@ -5,7 +5,10 @@ VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstapotAPI", "InstapotAPI\InstapotAPI.csproj", "{4EDEAED7-B9AE-4F18-A6E4-48BCF0841A9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstapotAPI.Tests", "InstapotAPI.Tests\InstapotAPI.Tests.csproj", "{46D51AD7-AFFF-4291-8F4E-935346C215E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstapotAPI.Tests", "InstapotAPI.Tests\InstapotAPI.Tests.csproj", "{46D51AD7-AFFF-4291-8F4E-935346C215E2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4EDEAED7-B9AE-4F18-A6E4-48BCF0841A9A} = {4EDEAED7-B9AE-4F18-A6E4-48BCF0841A9A}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

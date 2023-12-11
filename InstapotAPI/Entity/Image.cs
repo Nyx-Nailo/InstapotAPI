@@ -8,7 +8,7 @@ public class Image
     public string Description { get; set; }
     public DateTime CreatedDate { get; set; }
     public int UserID { get; set; }
-    public List<Comment> Comments { get; set; }
+    public List<int> Comments { get; set; }
     public bool isPublished { get; set; }
     public List<int> LikedBy { get; set; }
 }

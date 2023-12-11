@@ -67,11 +67,16 @@ public static class FakeData
         {
             var imageComment = fakeComment
                 .Where(c => c.ImageID == image.Id)
+                .Select(c => c.Id)
                 .ToList();
 
             if (imageComment.Count > 0)
             {
                 image.Comments = imageComment;
+            }
+            else
+            {
+                image.Comments = new List<int>();
             }
 
             var likedProfile = fakeProfile
