@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace InstapotAPI.Infrastructure.Repositories
 {
-    public class ProfileReposetory
+    public class ProfileReposetory : IProfileRepository
     {
         private InstapotContext _context;
         

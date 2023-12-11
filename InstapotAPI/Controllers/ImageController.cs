@@ -17,7 +17,7 @@ public class ImageController : ControllerBase
         _commentRepo = commentRepo;
     }
     [HttpGet]
-    [Route("ImagesFromUser{id}")]
+    [Route("ImagesFromUser/{id}")]
     public async Task<ActionResult<List<Image>>> GetImagesFromUser(int id)
     {
         var images = await _imageRepo.GetImagesFromUser(id);
@@ -25,7 +25,7 @@ public class ImageController : ControllerBase
         return Ok(images);
     }
     [HttpGet]
-    [Route("ImageFlowForUser{id}")]
+    [Route("ImageFlowForUser/{id}")]
     public async Task<ActionResult<List<Image>>> GetImageFlow(int id)
     {
         var images = await _imageRepo.GetImageFlow(id);
@@ -33,7 +33,7 @@ public class ImageController : ControllerBase
         return Ok(images);
     }
     [HttpGet]
-    [Route("GetImage{id}")]
+    [Route("Image/{id}")]
     public async Task<ActionResult<Image>> GetImage(int id)
     {
         var image = await _imageRepo.GetImage(id);
@@ -41,7 +41,7 @@ public class ImageController : ControllerBase
         return Ok(image);
     }
     [HttpPost]
-    [Route("PostImage{userId}/{path}/{description}")]
+    [Route("PostImage/{userId}/{path}/{description}")]
     public async Task<ActionResult<Image>> PostImage(int userID, string path, string desc)
     {
         var newImage = new Image() { Path = path, Description = desc, UserID = userID, Comments = new List<int>(), Title = "", LikedBy = new List<int>(), isPublished = true, CreatedDate = DateTime.UtcNow};
@@ -52,7 +52,7 @@ public class ImageController : ControllerBase
         return Ok(createdImage);
     }
     [HttpPost]
-    [Route("PostComment{imageId}/{userId}/{comment}")]
+    [Route("PostComment/{imageId}/{userId}/{comment}")]
     public async Task<ActionResult<Comment>> PostComment(int userId, int imageId, string comment)
     {
         var newComment = new Comment() { ImageID = imageId, UserID = userId, Text = comment, CreatedDate = DateTime.UtcNow };
@@ -61,7 +61,7 @@ public class ImageController : ControllerBase
         return Ok(createdComment);
     }
     [HttpPut]
-    [Route("Like{imageId}/{userId}")]
+    [Route("Like/{imageId}/{userId}")]
     public async Task<ActionResult<bool>> LikeImage(int imageId, int userId)
     {
         var image = await _imageRepo.GetImage(imageId);
@@ -73,5 +73,14 @@ public class ImageController : ControllerBase
         }
         await _imageRepo.AddLike(imageId, userId);
         return Ok(true);
+    }
+    [HttpDelete]
+    [Route("Delete/{imageId}/{userId}")]
+    public async Task<ActionResult> DeleteImage(int imageId, int userId)
+    {
+        var image = await _imageRepo.GetImage(imageId);
+        if(image == null) return BadRequest();
+        if(image.UserID != userId) return Forbid();
+        return Ok();
     }
 }
