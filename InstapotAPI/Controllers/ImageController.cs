@@ -44,7 +44,7 @@ public class ImageController : ControllerBase
     [Route("PostImage{userId}/{path}/{description}")]
     public async Task<ActionResult<Image>> PostImage(int userID, string path, string desc)
     {
-        var newImage = new Image() { Path = path, Description = desc, UserID = userID, Comments = new List<int>(), Title = "", LikedBy = new List<int>(), isPublished = true, CreatedDate = DateTime.UtcNow}
+        var newImage = new Image() { Path = path, Description = desc, UserID = userID, Comments = new List<int>(), Title = "", LikedBy = new List<int>(), isPublished = true, CreatedDate = DateTime.UtcNow};
         var createdImage = await _imageRepo.CreateNewImage(newImage);
 
         if(createdImage == null) return BadRequest();
