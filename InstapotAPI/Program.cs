@@ -50,7 +50,11 @@ public class Program
         {
             var context = services.GetRequiredService<InstapotContext>();
             context.Database.Migrate();
-            FakeData.InitializeData(1000);
+
+            if (!context.Profiles.Any())
+            {
+                FakeData.InitializeData(1000);
+            }
         }
         catch (Exception ex)
         {
