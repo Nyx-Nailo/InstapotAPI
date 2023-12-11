@@ -11,7 +11,7 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
     public class ProfileReposetoryTest
     {
         private InstapotContext _dbContext;
-        private ProfileReposetory _profileReposetory;
+        private ProfileRepository _profileReposetory;
         private Profile[] _testProfiles;
 
         [TestInitialize]
@@ -19,14 +19,14 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         {
             _testProfiles = [
                                 new Profile { Username = "username", Password = "passoword", Email = "email", IsVerified = false, ProfilePicture = "Path to profile picture" },
-                                new Profile { Username = "username", Password = "passoword", Email = "email", IsVerified = false },
+                                new Profile { Username = "username", Password = "passoword", Email = "email", IsVerified = false,},
                                 new Profile { Username = "username", Password = "passoword", Email = "email", IsVerified = false, ProfilePicture = "Path to profile picture" },
                                 new Profile { Username = "NewUsername!!!", Password = "passoword", Email = "email", IsVerified = false },
                                 new Profile { Username = "username", Password = "passoword", Email = "email", IsVerified = false, ProfilePicture = "Path to profile picture" },
-                                new Profile { Username = "username", Password = "passoword", Email = "email", IsVerified = false },
-                                new Profile { Username = "username", Password = "passoword", Email = "email", IsVerified = false },
-                                new Profile { Username = "username", Password = "passoword", Email = "email", IsVerified = false },
-                                new Profile { Username = "username", Password = "passoword", Email = "email", IsVerified = false },
+                                new Profile { Username = "username", Password = "passoword", Email = "email", IsVerified = false, LoginStatus = true },
+                                new Profile { Username = "username", Password = "passoword", Email = "email", IsVerified = false, LoginStatus = false },
+                                new Profile { Username = "username", Password = "passoword", Email = "email", IsVerified = false, LoginStatus = true },
+                                new Profile { Username = "username", Password = "passoword", Email = "email", IsVerified = false, LoginStatus = false },
                                 new Profile { Username = "username", Password = "passoword", Email = "email", IsVerified = false },
                             ];
 
@@ -39,7 +39,7 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
             _dbContext.Profiles.AddRange(_testProfiles);
             _dbContext.SaveChanges();
 
-            _profileReposetory = new ProfileReposetory(_dbContext);
+            _profileReposetory = new ProfileRepository(_dbContext);
         }
 
         [TestMethod]
@@ -128,7 +128,7 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
         [TestMethod]
         [DataRow(0)]
         [DataRow(-4)]
-        [DataRow(6)]
+        [DataRow(600)]
         public async Task If_PathToProfilePicture_Is_Null_Or_Is_Given_A_Nonexistent_Id_Return_Null(int id)
         {
             var result = await _profileReposetory.PathToProfilePicture(id);
@@ -324,6 +324,36 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
 
 
             Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        [DataRow(7)]
+        [DataRow(8)]
+        [DataRow(9)]
+        public async Task If_SetLoginStatusToTrue_Is_Given_A_Id_Return_Bool(int id)
+        {
+            var expected = true; 
+
+
+            var result = await _profileReposetory.SetLoginStatusToTrue(id);
+
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        [DataRow(7)]
+        [DataRow(8)]
+        [DataRow(9)]
+        public async Task If_SetLoginStatusToFalse_Is_Given_A_Nonexistent_Id_Return_Null(int id)
+        {
+            var expected = false;
+
+
+            var result = await _profileReposetory.SetLoginStatusToFalse(id);
+
+
+            Assert.AreEqual(expected, result);
         }
 
     }
