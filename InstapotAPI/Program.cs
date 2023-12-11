@@ -1,5 +1,6 @@
 
 using InstapotAPI.Infrastructure;
+using InstapotAPI.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace InstapotAPI;
@@ -19,6 +20,9 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        builder.Logging.AddConsole();
+        builder.Logging.SetMinimumLevel(LogLevel.Debug);
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -34,6 +38,28 @@ public class Program
 
 
         app.MapControllers();
+
+        using var scope = app.Services.CreateScope();
+        var services = scope.ServiceProvider;
+
+        var logger = services.GetRequiredService<ILogger<Program>>();
+
+        logger.LogInformation("API starting...");
+
+        try
+        {
+            var context = services.GetRequiredService<InstapotContext>();
+            context.Database.Migrate();
+
+            if (!context.Profiles.Any())
+            {
+                FakeData.InitializeData(1000);
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Migration errror...");
+        }
 
         app.Run();
     }
