@@ -11,7 +11,7 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
     public class ProfileReposetoryTest
     {
         private InstapotContext _dbContext;
-        private ProfileReposetory _profileReposetory;
+        private ProfileRepository _profileReposetory;
         private Profile[] _testProfiles;
 
         [TestInitialize]
@@ -39,7 +39,7 @@ namespace InstapotAPI.Tests.InfrastructureTests.RepositoriesTests
             _dbContext.Profiles.AddRange(_testProfiles);
             _dbContext.SaveChanges();
 
-            _profileReposetory = new ProfileReposetory(_dbContext);
+            _profileReposetory = new ProfileRepository(_dbContext);
         }
 
         [TestMethod]
