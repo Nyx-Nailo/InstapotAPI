@@ -46,6 +46,10 @@ public class ImageRepository : IImageRepository
     {
         return await _dbContext.Images.FindAsync(id);
     }
+    public async Task<List<Image>?> GetLikedImage(int id)
+    {
+        return await _dbContext.Images.Where(img => img.LikedBy.Contains(id)).ToListAsync();
+    }
     public async Task<List<Image>?> GetImageFlow(int id)
     {
         return _dbContext.Images.Where(img => img.UserID != id && img.isPublished == true).OrderByDescending(img => img.CreatedDate).ToList();
