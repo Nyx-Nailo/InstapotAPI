@@ -4,7 +4,7 @@ using InstapotAPI.Infrastructure;
 
 namespace InstapotAPI.Infrastructure.Repositories;
 
-public class ImageRepository
+public class ImageRepository : IImageRepository
 {
     private InstapotContext _dbContext;
     public ImageRepository(InstapotContext context)

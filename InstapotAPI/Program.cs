@@ -1,4 +1,4 @@
-
+using InstapotAPI.Infrastructure.Repositories;
 using InstapotAPI.Infrastructure;
 using InstapotAPI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +22,9 @@ public class Program
 
         builder.Logging.AddConsole();
         builder.Logging.SetMinimumLevel(LogLevel.Debug);
+
+        builder.Services.AddScoped<IImageRepository, ImageRepository>();
+        builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 
         var app = builder.Build();
 

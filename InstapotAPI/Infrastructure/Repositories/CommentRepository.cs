@@ -2,7 +2,7 @@
 
 namespace InstapotAPI.Infrastructure.Repositories;
 
-public class CommentRepository
+public class CommentRepository : ICommentRepository
 {
     private InstapotContext _dbContext;
 
