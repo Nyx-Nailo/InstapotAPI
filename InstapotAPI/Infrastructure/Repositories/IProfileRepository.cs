@@ -24,5 +24,9 @@ namespace InstapotAPI.Infrastructure.Repositories
 
         public Task<bool?> IsVerified(int id);
 
+        public Task<bool?> SetLoginStatusToTrue(int id);
+
+        public Task<bool?> SetLoginStatusToFalse(int id);
+
     }
 }

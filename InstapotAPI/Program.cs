@@ -1,6 +1,8 @@
-using InstapotAPI.Infrastructure.Repositories;
+using InstapotAPI.Helpers;
 using InstapotAPI.Infrastructure;
+using InstapotAPI.Infrastructure.Repositories;
 using InstapotAPI.Services;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace InstapotAPI;
@@ -36,7 +38,8 @@ public class Program
 
         builder.Services.AddScoped<IImageRepository, ImageRepository>();
         builder.Services.AddScoped<ICommentRepository, CommentRepository>();
-        builder.Services.AddScoped<IProfileRepository, ProfileReposetory>();
+        builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+        builder.Services.AddAutoMapper(typeof(MappingProfiler));
 
         var app = builder.Build();
 
