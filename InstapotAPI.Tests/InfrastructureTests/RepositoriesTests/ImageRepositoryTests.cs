@@ -41,6 +41,17 @@ public class ImageRepositoryTests
 
         _sut = new ImageRepository(_dbContext);
     }
+
+    [TestMethod]
+    public async Task When_Getting_All_Image_Return_Image_List()
+    {
+        var expected = _dbContext.Images.Count();
+
+        var result = await _sut.GetAllImages();
+
+        Assert.AreEqual(expected, result.Count());
+    }
+
     #region Create New Image
     [TestMethod]
     public async Task When_Creating_New_Image_Return_Created_Image()
@@ -313,7 +324,7 @@ public class ImageRepositoryTests
     #region Add Like
     [TestMethod]
     [DataRow(new int[] { })]
-    [DataRow(new int[] { 1, 2, 3, 4, 5})]
+    [DataRow(new int[] { 1, 2, 3, 4, 5 })]
     public async Task When_Successfully_Adding_A_Like_Return_New_Like_Count(int[] likes)
     {
         var image = new Image { UserID = 3, Path = "utsaduw", Title = "newImage%¤", Description = "012euad23", CreatedDate = new DateTime(2020, 05, 10, 8, 14, 0), Comments = new List<int>(), isPublished = true, LikedBy = likes.ToList() };
@@ -367,7 +378,7 @@ public class ImageRepositoryTests
     #endregion
     #region Remove Like
     [TestMethod]
-    [DataRow(new int[] { 5}, 5)]
+    [DataRow(new int[] { 5 }, 5)]
     [DataRow(new int[] { 1, 2, 3, 4, 5 }, 5)]
     public async Task When_Successfully_Removing_A_Like_Return_New_Like_Count(int[] likes, int removedUserId)
     {
@@ -382,7 +393,7 @@ public class ImageRepositoryTests
         Assert.AreEqual(expected, result);
     }
     [TestMethod]
-    [DataRow(new int[] { 5}, 5)]
+    [DataRow(new int[] { 5 }, 5)]
     [DataRow(new int[] { 1, 2, 3, 4, 5 }, 5)]
     public async Task When_Successfully_Removing_A_Like_Remove_User_To_Liked_List(int[] likes, int removedUserId)
     {
@@ -440,7 +451,7 @@ public class ImageRepositoryTests
     public async Task When_Getting_Published_Status_From_Non_Existing_Image_Return_Null()
     {
         var id = 100;
-        
+
         var result = await _sut.IsPublished(id);
 
         Assert.IsNull(result);

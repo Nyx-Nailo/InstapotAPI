@@ -33,6 +33,14 @@ public class ImageController : ControllerBase
         return Ok(images);
     }
     [HttpGet]
+    [Route("Image/")]
+    public async Task<ActionResult<List<Image>>> GetAllImagesAsync()
+    {
+        var images = await _imageRepo.GetAllImages();
+        if (images == null) return NotFound();
+        return Ok(images);
+    }
+    [HttpGet]
     [Route("Image/{id}")]
     public async Task<ActionResult<Image>> GetImage(int id)
     {
@@ -44,10 +52,10 @@ public class ImageController : ControllerBase
     [Route("PostImage/{userId}/{path}/{description}")]
     public async Task<ActionResult<Image>> PostImage(int userID, string path, string desc)
     {
-        var newImage = new Image() { Path = path, Description = desc, UserID = userID, Comments = new List<int>(), Title = "", LikedBy = new List<int>(), isPublished = true, CreatedDate = DateTime.UtcNow};
+        var newImage = new Image() { Path = path, Description = desc, UserID = userID, Comments = new List<int>(), Title = "", LikedBy = new List<int>(), isPublished = true, CreatedDate = DateTime.UtcNow };
         var createdImage = await _imageRepo.CreateNewImage(newImage);
 
-        if(createdImage == null) return BadRequest();
+        if (createdImage == null) return BadRequest();
 
         return Ok(createdImage);
     }
@@ -57,7 +65,7 @@ public class ImageController : ControllerBase
     {
         var newComment = new Comment() { ImageID = imageId, UserID = userId, Text = comment, CreatedDate = DateTime.UtcNow };
         var createdComment = await _commentRepo.CreateComment(newComment);
-        if(createdComment == null) return BadRequest();
+        if (createdComment == null) return BadRequest();
         return Ok(createdComment);
     }
     [HttpPut]
@@ -65,7 +73,7 @@ public class ImageController : ControllerBase
     public async Task<ActionResult<bool>> LikeImage(int imageId, int userId)
     {
         var image = await _imageRepo.GetImage(imageId);
-        if(image == null) return BadRequest();
+        if (image == null) return BadRequest();
         if (image.LikedBy.Contains(userId))
         {
             await _imageRepo.RemoveLike(imageId, userId);
@@ -79,8 +87,8 @@ public class ImageController : ControllerBase
     public async Task<ActionResult> DeleteImage(int imageId, int userId)
     {
         var image = await _imageRepo.GetImage(imageId);
-        if(image == null) return BadRequest();
-        if(image.UserID != userId) return Forbid();
+        if (image == null) return BadRequest();
+        if (image.UserID != userId) return Forbid();
         return Ok();
     }
 }

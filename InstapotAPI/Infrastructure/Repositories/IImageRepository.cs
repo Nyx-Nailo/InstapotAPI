@@ -1,4 +1,5 @@
-﻿using InstapotAPI.Entity;
+﻿using Bogus.DataSets;
+using InstapotAPI.Entity;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +8,7 @@ namespace InstapotAPI.Infrastructure.Repositories;
 public interface IImageRepository
 {
     public Task<Image?> CreateNewImage(Image newImage);
+    public Task<List<Image>> GetAllImages();
     public Task<Image?> GetImage(int id);
     public Task<List<Image>?> GetImageFlow(int id);
     public Task<Image?> DeleteImage(int id);
