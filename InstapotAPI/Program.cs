@@ -36,6 +36,7 @@ public class Program
 
         builder.Services.AddScoped<IImageRepository, ImageRepository>();
         builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+        builder.Services.AddScoped<IProfileRepository, ProfileReposetory>();
 
         var app = builder.Build();
 
@@ -68,7 +69,7 @@ public class Program
 
             if (!context.Profiles.Any())
             {
-                FakeData.InitializeData(1000);
+                FakeData.InitializeData(100);
             }
         }
         catch (Exception ex)

@@ -12,8 +12,8 @@ public static class FakeData
     {
         var random = new Random();
 
-        var imagesPerUser = random.Next(0, profilesToGenerate / 2);
-        var commentsPerUser = random.Next(0, profilesToGenerate / 2);
+        var imagesPerUser = random.Next(0, profilesToGenerate * 2);
+        var commentsPerUser = random.Next(0, profilesToGenerate * 2);
 
         var _profileFaker = new Faker<Profile>()
             .UseSeed(1337)
