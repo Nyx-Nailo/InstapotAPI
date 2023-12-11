@@ -23,6 +23,17 @@ public class Program
         builder.Logging.AddConsole();
         builder.Logging.SetMinimumLevel(LogLevel.Debug);
 
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("CorsPolicy",
+                                  policy =>
+                                  {
+                                      policy.AllowAnyOrigin()
+                                    .AllowAnyHeader()
+                                    .AllowAnyMethod();
+                                  });
+        });
+
         builder.Services.AddScoped<IImageRepository, ImageRepository>();
         builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 
@@ -39,6 +50,7 @@ public class Program
 
         app.UseAuthorization();
 
+        app.UseCors("CorsPolicy");
 
         app.MapControllers();
 
