@@ -108,7 +108,7 @@ public class ImageRepository : IImageRepository
 
         if (image.LikedBy.Contains(userId) is false)
             image.LikedBy.Add(userId);
-
+        await _dbContext.SaveChangesAsync();
         return image.LikedBy.Count();
     }
     public async Task<int?> RemoveLike(int id, int userId)
@@ -118,7 +118,7 @@ public class ImageRepository : IImageRepository
         if (image is null) return null;
 
         image.LikedBy.Remove(userId);
-
+        await _dbContext.SaveChangesAsync();
         return image.LikedBy.Count();
     }
     public async Task<bool?> IsPublished(int id)
