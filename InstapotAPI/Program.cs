@@ -41,7 +41,6 @@ public class Program
         builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
         builder.Services.AddAutoMapper(typeof(MappingProfiler));
 
-
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -73,7 +72,7 @@ public class Program
 
             if (!context.Profiles.Any())
             {
-                FakeData.InitializeData(1000);
+                FakeData.InitializeData(100);
             }
         }
         catch (Exception ex)

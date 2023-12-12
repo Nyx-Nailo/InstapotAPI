@@ -26,15 +26,15 @@ public class ImageRepository : IImageRepository
     #region CreateNewImage help methods
     private bool IsImageFreeFromNullValues(Image image)
     {
-        if (image == null)              return false;
-        if (image.UserID == null)       return false;
-        if (image.Path == null)         return false;
-        if (image.Title == null)        return false;
-        if (image.Description == null)  return false;
-        if (image.CreatedDate == null)  return false;
-        if (image.Comments == null)     return false;
-        if (image.isPublished == null)  return false;
-        if (image.LikedBy == null)      return false;
+        if (image == null) return false;
+        if (image.UserID == null) return false;
+        if (image.Path == null) return false;
+        if (image.Title == null) return false;
+        if (image.Description == null) return false;
+        if (image.CreatedDate == null) return false;
+        if (image.Comments == null) return false;
+        if (image.isPublished == null) return false;
+        if (image.LikedBy == null) return false;
         return true;
     }
     #endregion
@@ -44,7 +44,7 @@ public class ImageRepository : IImageRepository
     }
     public async Task<List<Image>?> GetImageFlow(int id)
     {
-        return _dbContext.Images.Where(img => img.UserID != id && img.isPublished == true).ToList();
+        return _dbContext.Images.Where(img => img.UserID != id && img.isPublished == true).OrderByDescending(img => img.CreatedDate).ToList();
     }
     public async Task<Image?> DeleteImage(int id)
     {
