@@ -11,6 +11,7 @@ public interface IImageRepository
     public Task<List<Image>> GetAllImages();
     public Task<Image?> GetImage(int id);
     public Task<List<Image>?> GetImageFlow(int id);
+    public Task<List<Image>?> GetLikedImage(int id);
     public Task<Image?> DeleteImage(int id);
     public Task<Image?> ChangeTitel(int id, string newTitle);
     public Task<Image?> ChangeDescription(int id, string newDescription);

@@ -41,6 +41,14 @@ public class ImageController : ControllerBase
         return Ok(images);
     }
     [HttpGet]
+    [Route("Image/Liked")]
+    public async Task<ActionResult<List<Image>>> GetLikedImages(int id)
+    {
+        var images = await _imageRepo.GetLikedImage(id);
+        if (images == null) return NotFound();
+        return Ok(images);
+    }
+    [HttpGet]
     [Route("Image/{id}")]
     public async Task<ActionResult<Image>> GetImage(int id)
     {

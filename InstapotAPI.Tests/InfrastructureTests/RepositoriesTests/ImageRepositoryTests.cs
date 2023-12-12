@@ -52,6 +52,18 @@ public class ImageRepositoryTests
         Assert.AreEqual(expected, result.Count());
     }
 
+    [TestMethod]
+    public async Task When_Getting_All_Liked_Image_Return_Image_List()
+    {
+        var id = 1;
+
+        var expected = _dbContext.Images.Where(img => img.LikedBy.Contains(id)).Count();
+
+        var result = await _sut.GetLikedImage(id);
+
+        Assert.AreEqual(expected, result.Count());
+    }
+
     #region Create New Image
     [TestMethod]
     public async Task When_Creating_New_Image_Return_Created_Image()

@@ -40,11 +40,15 @@ public class ImageRepository : IImageRepository
     #endregion
     public async Task<List<Image>> GetAllImages()
     {
-        return await _dbContext.Images.ToListAsync();
+        return await _dbContext.Images.OrderByDescending(img => img.CreatedDate).ToListAsync();
     }
     public async Task<Image?> GetImage(int id)
     {
         return await _dbContext.Images.FindAsync(id);
+    }
+    public async Task<List<Image>?> GetLikedImage(int id)
+    {
+        return await _dbContext.Images.Where(img => img.LikedBy.Contains(id)).OrderByDescending(img => img.CreatedDate).ToListAsync();
     }
     public async Task<List<Image>?> GetImageFlow(int id)
     {
@@ -104,7 +108,7 @@ public class ImageRepository : IImageRepository
 
         if (image.LikedBy.Contains(userId) is false)
             image.LikedBy.Add(userId);
-
+        await _dbContext.SaveChangesAsync();
         return image.LikedBy.Count();
     }
     public async Task<int?> RemoveLike(int id, int userId)
@@ -114,7 +118,7 @@ public class ImageRepository : IImageRepository
         if (image is null) return null;
 
         image.LikedBy.Remove(userId);
-
+        await _dbContext.SaveChangesAsync();
         return image.LikedBy.Count();
     }
     public async Task<bool?> IsPublished(int id)
