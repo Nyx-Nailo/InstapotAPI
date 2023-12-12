@@ -38,6 +38,10 @@ public class ImageRepository : IImageRepository
         return true;
     }
     #endregion
+    public async Task<List<Image>> GetAllImages()
+    {
+        return await _dbContext.Images.ToListAsync();
+    }
     public async Task<Image?> GetImage(int id)
     {
         return await _dbContext.Images.FindAsync(id);
